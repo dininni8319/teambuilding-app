@@ -1,4 +1,4 @@
-FROM python:alpine AS base
+FROM python:alpine
 EXPOSE 8000
 
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -15,7 +15,7 @@ RUN python -m venv ${VIRTUAL_ENV}
 ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
 
 WORKDIR /app
-COPY . /app
+COPY ./source /app
 RUN python -m pip install --upgrade pip \
     && pip install -r requirements.txt
 
@@ -24,16 +24,4 @@ RUN chown -R appuser /app
 
 USER appuser
 
-
-#---------------------------------------------------------
-FROM base AS prod
-
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "web.wsgi"]
-
-
-#---------------------------------------------------------
-FROM base AS dev
-
-RUN pip install debugpy
-
-CMD ["debugpy", "--wait-for-client", "--listen", "0.0.0.0:5678", "manage.py", "runserver", "0.0.0.0:8000", "--nothreading", "--noreload"]

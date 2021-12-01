@@ -5,5 +5,14 @@ services:
     image: taste_purchase
     build:
       context: ./Docker/app
+    environment:
+      SECRET_KEY: "{$SECRET_KEY}"
+      DEBUG: "{$DEBUG}"
+      EMAIL_BACKEND: "{$EMAIL_BACKEND}"
+      EMAIL_HOST: "{$EMAIL_HOST}"
+      EMAIL_HOST_PASSWORD: "{$EMAIL_HOST_PASSWORD}"
+      EMAIL_HOST_USER: "{$EMAIL_HOST_USER}"
+      EMAIL_PORT: "{$EMAIL_PORT}"
+      EMAIL_USE_TLS: "{$EMAIL_USE_TLS}"
     ports:
-      - 8000:8000
+      - "127.0.0.1:8000:8000"
