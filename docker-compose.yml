@@ -2,17 +2,10 @@ version: '3.4'
 
 services:
   web:
-    image: taste_purchase
+    container_name: taste_purchase_app
     build:
       context: ./Docker/app
-    environment:
-      SECRET_KEY: "{$SECRET_KEY}"
-      DEBUG: "{$DEBUG}"
-      EMAIL_BACKEND: "{$EMAIL_BACKEND}"
-      EMAIL_HOST: "{$EMAIL_HOST}"
-      EMAIL_HOST_PASSWORD: "{$EMAIL_HOST_PASSWORD}"
-      EMAIL_HOST_USER: "{$EMAIL_HOST_USER}"
-      EMAIL_PORT: "{$EMAIL_PORT}"
-      EMAIL_USE_TLS: "{$EMAIL_USE_TLS}"
+    env_file:
+      - .env
     ports:
       - "127.0.0.1:8000:8000"
