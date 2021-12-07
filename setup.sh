@@ -25,6 +25,9 @@ echo "Edit the .env file with your variables"
 read -n 1 -s -r -p "Press any key to continue when you are finished"
 echo ""
 
+export COMPOSE_FILE="${PWD}/docker-compose.yml"
+cd Docker/app/source
+
 docker compose up --build -d
 docker compose exec web python manage.py migrate
 
