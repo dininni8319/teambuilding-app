@@ -1,4 +1,5 @@
-#bin/sh
+#!/usr/bin/env bash
+
 echo "Installing application..."
 
 provisioning_dir=${PWD}
