@@ -35,6 +35,6 @@ export COMPOSE_FILE="${provisioning_dir}/docker-compose.yml"
 docker compose up --build --force-recreate -d
 docker compose exec web python manage.py migrate
 
-ping "${HTTP_HOST}":"${HTTP_PORT}"
+ping "${HTTP_HOST}:${HTTP_PORT}" | echo "Cannot reach ${HTTP_HOST}:${HTTP_PORT}, please ensure it in your etc/hosts file" & exit 1
 
 xdg-open "http://${HTTP_HOST}:${HTTP_PORT}"
