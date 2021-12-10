@@ -4,9 +4,9 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-repo_source="ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/tb_taste_purchase"
-repo_destination="${repo_destination}"
 provisioning_dir="${PWD}"
+repo_source="ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/tb_taste_purchase"
+repo_destination="${provisioning_dir}/Docker/app/source"
 
 echo "Installing application..."
 
@@ -25,7 +25,7 @@ echo "Cloning repository..."
 rm -rf "${repo_destination}"
 mkdir -p "${repo_destination}"
 cd "${repo_destination}"
-git clone "${repo_source}" .
+git clone "${repo_source}" "${repo_destination}"
 
 echo "Available branches: "
 git branch -a
