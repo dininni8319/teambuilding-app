@@ -5,7 +5,7 @@ set -o pipefail
 set -o nounset
 
 repo_source="ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/tb_taste_purchase"
-repo_destination=""${repo_destination}""
+repo_destination="${repo_destination}"
 provisioning_dir="${PWD}"
 
 echo "Installing application..."
