@@ -4,12 +4,10 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-cp -p "${provisioning_dir}/.env.dist" "${provisioning_dir}/.env"
+cp -p "${PWD}/.env.dist" "${PWD}/.env"
 set -o allexport; source .env; set +o allexport
 
 echo "Installing application..."
-
-provisioning_dir=${PWD}
 
 echo "Do you want to pull code from a custom repo?"
 read -n 1 -s -r -p "(Y/N): " confirm_custom_repo
@@ -36,7 +34,7 @@ echo "Edit the .env file with your variables"
 read -n 1 -s -r -p "Press any key to continue when you are finished"
 echo ""
 
-export COMPOSE_FILE="${provisioning_dir}/docker-compose.yml"
+export COMPOSE_FILE="${PWD}/docker-compose.yml"
 
 docker compose up --build -d
 docker compose exec web python manage.py migrate
