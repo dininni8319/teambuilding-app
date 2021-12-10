@@ -18,9 +18,6 @@ echo ""
 
 set -o allexport; source .env; set +o allexport
 
-echo "Do you want to pull code from a custom repo?"
-read -n 1 -s -r -p "(Y/N): " confirm_custom_repo
-
 echo "Cloning repository..."
 rm -rf "${repo_destination}"
 mkdir -p "${repo_destination}"
