@@ -31,7 +31,7 @@ git branch -a
 read -p "Enter the starting branch name: " branch_name
 git checkout $branch_name
 
-cp "${provisioning_dir}/.env.dist" "${provisioning_dir}.env"
+cp "${provisioning_dir}/.env.dist" "${provisioning_dir}/.env"
 echo "Edit the .env file with your variables"
 read -n 1 -s -r -p "Press any key to continue when you are finished"
 echo ""
