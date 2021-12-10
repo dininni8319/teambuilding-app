@@ -25,6 +25,7 @@ cd "${repo_destination}"
 git clone "${repo_source}" "${repo_destination}"
 
 echo "Available branches: "
+git fetch origin
 git branch -a
 
 read -p "Enter the starting branch name: " branch_name
