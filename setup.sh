@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 
-set -o errexit
-set -o pipefail
-set -o nounset
-
-cp -p "${PWD}/.env.dist" "${PWD}/.env"
-set -o allexport; source .env; set +o allexport
+#set -o errexit
+#set -o pipefail
+#set -o nounset
 
 echo "Installing application..."
+
+provisioning_dir=$PWD
+cp -p "${provisioning_dir}/.env.dist" "${provisioning_dir}/.env"
+
+echo "Edit the .env file with your variables"
+read -n 1 -s -r -p "Press any key to continue when you are finished"
+echo ""
+
+set -o allexport; source .env; set +o allexport
 
 echo "Do you want to pull code from a custom repo?"
 read -n 1 -s -r -p "(Y/N): " confirm_custom_repo
@@ -30,13 +36,9 @@ git branch -a
 read -p "Enter the starting branch name: " branch_name
 git checkout $branch_name
 
-echo "Edit the .env file with your variables"
-read -n 1 -s -r -p "Press any key to continue when you are finished"
-echo ""
+export COMPOSE_FILE="${provisioning_dir}/docker-compose.yml"
 
-export COMPOSE_FILE="${PWD}/docker-compose.yml"
-
-docker compose up --build -d
+docker compose up --build --force-recreate -d
 docker compose exec web python manage.py migrate
 
 ping "${HTTP_HOST}":"${HTTP_PORT}"
