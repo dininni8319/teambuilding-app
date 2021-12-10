@@ -4,6 +4,8 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+set -o allexport; source .env; set +o allexport
+
 echo "Installing application..."
 
 provisioning_dir=${PWD}
@@ -39,4 +41,6 @@ export COMPOSE_FILE="${provisioning_dir}/docker-compose.yml"
 docker compose up --build -d
 docker compose exec web python manage.py migrate
 
-xdg-open http://localhost:8000
+ping "${HTTP_HOST}":"${HTTP_PORT}"
+
+xdg-open "http://${HTTP_HOST}:${HTTP_PORT}"
