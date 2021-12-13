@@ -37,7 +37,7 @@
   export COMPOSE_FILE="${provisioning_dir}/docker-compose.yml"
 
   docker compose up --build --force-recreate -d
-  # docker compose exec web python manage.py migrate
+  docker compose exec web python manage.py migrate
 
   ping -c 3 "${HTTP_HOST}" || exit 1
 
