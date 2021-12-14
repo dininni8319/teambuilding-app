@@ -1,27 +1,22 @@
-FROM python:alpine
-EXPOSE 8000
+FROM python:slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV VIRTUAL_ENV=/venv
 
-RUN adduser -u 5678 --disabled-password --gecos "" appuser \
-    && mkdir ${VIRTUAL_ENV} \
-    && chown -R appuser ${VIRTUAL_ENV}
+ARG USER_ID
+ARG GROUP_ID
 
-USER appuser
-
-RUN python -m venv ${VIRTUAL_ENV}
-ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
+RUN groupadd -g "${GROUP_ID}" appuser \
+ && useradd --no-log-init -m -r -u "${USER_ID}" -g appuser appuser
 
 WORKDIR /app
-COPY ./source /app
-RUN python -m pip install --upgrade pip \
-    && pip install -r requirements.txt
-
-USER root
-RUN chown -R appuser /app
-
 USER appuser
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "web.wsgi"]
+ENV PATH="/home/appuser/.local/bin:${PATH}"
+
+COPY ./source/requirements.txt /app/
+
+RUN python -m pip install --upgrade pip \
+ && pip install --no-cache-dir --user -r requirements.txt
+
+COPY ./source /app

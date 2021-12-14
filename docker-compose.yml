@@ -1,11 +1,17 @@
 version: '3.4'
 
 services:
-  web:
-    container_name: taste_purchase_app
+  taste_purchase_web:
+    container_name: taste_purchase_container
     build:
       context: ./Docker/app
+      args:
+        - USER_ID=${DOCKER_UID}
+        - GROUP_ID=${DOCKER_GID}
+    command: gunicorn --bind 0.0.0.0:8000 web.wsgi
     env_file:
       - .env
     ports:
       - "127.0.0.1:8000:8000"
+    volumes:
+      - ./Docker/app/source:/app

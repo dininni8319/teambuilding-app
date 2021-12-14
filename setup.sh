@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 
+app_name="app"
+provisioning_dir="${PWD}"
+source_dir="${provisioning_dir}/Docker/${app_name}/source"
+repo_source="ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/tb_taste_purchase"
+
+export COMPOSE_FILE="${provisioning_dir}/docker-compose.yml"
+export DOCKER_UID="$(id -u)"
+export DOCKER_GID="$(id -g)"
+
 (
   set -o errexit
   set -o pipefail
   set -o nounset
-
-  provisioning_dir="${PWD}"
-  repo_source="ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/tb_taste_purchase"
-  repo_destination="${provisioning_dir}/Docker/app/source"
 
   echo "Installing application..."
 
@@ -22,24 +27,24 @@
   set +o allexport
 
   echo "Cloning repository..."
-  rm -rf "${repo_destination}"
-  mkdir -p "${repo_destination}"
-  cd "${repo_destination}"
-  git clone "${repo_source}" "${repo_destination}"
+  rm -rf "${source_dir}"
+  mkdir -p "${source_dir}"
+  cd "${source_dir}"
+  git clone "${repo_source}" "${source_dir}"
 
-  echo "Available branches: "
-  git fetch origin
-  git branch -a
-
-  read -p "Enter the starting branch name: " branch_name
-  git checkout "${branch_name}"
-
-  export COMPOSE_FILE="${provisioning_dir}/docker-compose.yml"
+  git checkout develop
 
   docker compose up --build --force-recreate -d
-  docker compose exec web python manage.py migrate
+  docker compose exec taste_purchase_web python manage.py migrate
 
   ping -c 3 "${HTTP_HOST}" || exit 1
 
   xdg-open "http://${HTTP_HOST}:${HTTP_PORT}"
 )
+
+if [ $? -eq 0 ]
+then
+  cd "${source_dir}"
+else
+  return $?
+fi

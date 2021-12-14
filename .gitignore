@@ -1,6 +1,6 @@
 .idea
 .vscode
-.venv
+
+Docker/**/source
 
 .env
-Docker/app/source
