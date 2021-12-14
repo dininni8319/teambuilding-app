@@ -11,7 +11,7 @@
 
 ## Utilizzo
 
-Per eseguire qualsiasi comando python sfruttando l'environment containerizzato, assicurarsi che il container sia in esecuzione, e digitare sul terminale il comando seguendo il sequente formato: 
+Per eseguire qualsiasi comando python sfruttando l'environment containerizzato, assicurarsi che il container sia in esecuzione, e che il terminale sia sulla directory in cui e' presente il file docker-compose.yml. Digitare sul terminale il comando seguendo il sequente formato: 
 
 ```bash
 docker compose exec SERVICE [CMD]

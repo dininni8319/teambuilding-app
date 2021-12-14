@@ -5,7 +5,6 @@ provisioning_dir="${PWD}"
 source_dir="${provisioning_dir}/Docker/${app_name}/source"
 repo_source="ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/tb_taste_purchase"
 
-export COMPOSE_FILE="${provisioning_dir}/docker-compose.yml"
 export DOCKER_UID="$(id -u)"
 export DOCKER_GID="$(id -g)"
 

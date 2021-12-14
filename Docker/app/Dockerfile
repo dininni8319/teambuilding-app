@@ -14,9 +14,10 @@ USER appuser
 
 ENV PATH="/home/appuser/.local/bin:${PATH}"
 
-COPY ./source/requirements.txt /app/
+# Nota: l'upgrade di pip va eseguito dopo aver impostato correttamente la variabile di ambiente PATH
+RUN python -m pip install --upgrade pip
 
-RUN python -m pip install --upgrade pip \
- && pip install --no-cache-dir --user -r requirements.txt
+COPY ./source/requirements.txt /app/
+RUN pip install --no-cache-dir --user -r requirements.txt
 
 COPY ./source /app
