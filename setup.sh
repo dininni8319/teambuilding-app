@@ -32,7 +32,9 @@ export DOCKER_GID="$(id -g)"
   cd "${source_dir}"
   git clone "${repo_source}" "${source_dir}"
 
+  cd "${source_dir}"
   git checkout develop
+  cd "${provisioning_dir}"
 
   docker compose up --build --force-recreate -d
   docker compose exec taste_purchase_web python manage.py migrate
@@ -44,7 +46,7 @@ export DOCKER_GID="$(id -g)"
 
 if [ $? -eq 0 ]
 then
-  cd "${source_dir}"
+  echo "Install successfull"
 else
   return $?
 fi
