@@ -21,6 +21,7 @@ services:
     volumes:
       - ./Docker/app/source:/app
   fake_smtp:
+    container_name: fake_smtp_container
     image: mailhog/mailhog
     logging:
       driver: 'none'
