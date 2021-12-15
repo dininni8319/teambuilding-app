@@ -20,4 +20,6 @@ RUN python -m pip install --upgrade pip
 COPY ./source/requirements.txt /app/
 RUN pip install --no-cache-dir --user -r requirements.txt
 
+RUN pip install gunicorn
+
 COPY ./source /app
