@@ -1,5 +1,8 @@
 version: '3.4'
 
+networks:
+  taste_purchase_network:
+
 services:
   taste_purchase_web:
     container_name: taste_purchase_container
@@ -11,7 +14,20 @@ services:
     command: gunicorn --bind 0.0.0.0:8000 web.wsgi
     env_file:
       - .env
+    networks:
+      taste_purchase_network:
     ports:
       - "127.0.0.1:8000:8000"
     volumes:
       - ./Docker/app/source:/app
+  fake_smtp:
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'
+    networks:
+      taste_purchase_network:
+        aliases:
+          - smtp.netbuilder.local
+    ports:
+      - "127.0.0.1:1025:1025"
+      - "127.0.0.1:8025:8025"
