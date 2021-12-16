@@ -20,6 +20,6 @@ RUN python -m pip install --upgrade pip
 COPY ./source/requirements.txt /app/
 RUN pip install --no-cache-dir --user -r requirements.txt
 
-RUN pip install gunicorn
+RUN pip install django-debug-toolbar gunicorn
 
 COPY ./source /app
