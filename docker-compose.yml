@@ -11,15 +11,29 @@ services:
       args:
         - USER_ID=${DOCKER_UID}
         - GROUP_ID=${DOCKER_GID}
-    command: gunicorn --bind 0.0.0.0:8000 web.wsgi
+    command: gunicorn web.wsgi:application --bind 0.0.0.0:8000
     env_file:
       - .env
+    expose:
+      - 8000
+    networks:
+      taste_purchase_network:
+    volumes:
+      - ./Docker/app/source:/home/user/www/app
+
+  reverse_proxy:
+    container_name: nginx_container
+    build:
+      context: ./Docker/nginx
+    depends_on:
+      - taste_purchase_web
     networks:
       taste_purchase_network:
     ports:
-      - "127.0.0.1:8000:8000"
+      - "127.0.0.1:80:80"
     volumes:
-      - ./Docker/app/source:/app
+      - ./Docker/app/source/static:/home/user/www/app/static
+
   fake_smtp:
     container_name: fake_smtp_container
     image: mailhog/mailhog
@@ -30,5 +44,4 @@ services:
         aliases:
           - smtp.netbuilder.local
     ports:
-      - "127.0.0.1:1025:1025"
       - "127.0.0.1:8025:8025"
