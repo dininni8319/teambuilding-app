@@ -11,7 +11,7 @@ services:
       args:
         - USER_ID=${DOCKER_UID}
         - GROUP_ID=${DOCKER_GID}
-    command: gunicorn web.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn www.wsgi:application --bind 0.0.0.0:8000
     env_file:
       - .env
     expose:
