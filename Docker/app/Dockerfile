@@ -15,6 +15,11 @@ ENV APP_HOME=/home/user/www/app
 RUN mkdir -p "${APP_HOME}"
 RUN mkdir "${APP_HOME}/static"
 
+RUN apt-get update \
+ && apt-get upgrade -y \
+ && apt-get install -y gettext \
+ && apt-get purge --autoremove -y
+
 WORKDIR "${APP_HOME}"
 RUN chown -R user:user "${HOME}"
 USER user
