@@ -22,3 +22,11 @@ Ad esempio, se si volessero eseguire le migrazioni sul servizio *taste_purchase_
 ```bash
 docker compose exec taste_purchase_web python manage.py migrate
 ```
+
+## Test
+
+Per eseguire i test, eseguire il seguente comando:
+
+```bash
+docker compose exec taste_purchase_web python manage.py test
+```
