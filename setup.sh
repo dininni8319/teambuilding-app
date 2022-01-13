@@ -43,6 +43,7 @@ repo_source="ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/tb_taste_purc
   docker compose up --build --force-recreate -d
   docker compose exec taste_purchase_web python manage.py collectstatic
   docker compose exec taste_purchase_web python manage.py migrate
+  docker compose exec taste_purchase_web python manage.py test
 
   ping -c 3 "${HTTP_HOST}" || exit 1
 
