@@ -1,36 +1,34 @@
-FROM python:latest
+FROM python:latest as dev
+
+RUN useradd -G www-data user
+
+ENV HOME=/usr/src/www
+ENV APP_HOME=/usr/src/www/app
+
+WORKDIR "${APP_HOME}"
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-ARG USER_ID
-ARG GROUP_ID
-
-RUN groupadd -g "${GROUP_ID}" user \
- && useradd --no-log-init -m -r -u "${USER_ID}" -g user user
-
-ENV HOME=/home/user/www
-ENV APP_HOME=/home/user/www/app
-
-RUN mkdir -p "${APP_HOME}"
-RUN mkdir "${APP_HOME}/static"
-
 RUN apt-get update \
- && apt-get upgrade -y \
- && apt-get install -y gettext \
- && apt-get purge --autoremove -y
+ && apt-get install -y gettext
 
-WORKDIR "${APP_HOME}"
-RUN chown -R user:user "${HOME}"
-USER user
-
-ENV PATH="${HOME}/.local/bin:${PATH}"
-
-# Nota: l'upgrade di pip va eseguito dopo aver impostato correttamente la variabile di ambiente PATH
-RUN python -m pip install --upgrade pip
-
-COPY ./source/requirements.txt .
+RUN pip install --upgrade pip
+COPY ./Docker/app/source/requirements.txt .
 RUN pip install -r requirements.txt
-RUN pip install django-debug-toolbar gunicorn
+COPY ./Docker/app/source/requirements-devonly.txt .
+RUN pip install -r requirements-devonly.txt
 
-COPY ./source .
+
+FROM dev as prod
+
+RUN pip uninstall -y -r requirements-devonly.txt
+
+COPY ./Docker/app/source .
+
+RUN rm requirements.txt \
+ && rm requirements-devonly.txt \
+ && rm README.md \
+ && rm -r teambuilding/www/tests
+
+USER user

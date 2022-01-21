@@ -6,11 +6,7 @@ networks:
 services:
   taste_purchase_web:
     container_name: taste_purchase_container
-    build:
-      context: ./Docker/app
-      args:
-        - USER_ID=${DOCKER_UID}
-        - GROUP_ID=${DOCKER_GID}
+    image: teambuilding/taste-and-purchase-dev
     command: gunicorn teambuilding.www.wsgi:application --bind 0.0.0.0:8000
     env_file:
       - .env
@@ -18,8 +14,9 @@ services:
       - 8000
     networks:
       taste_purchase_network:
+    user: user
     volumes:
-      - ./Docker/app/source:/home/user/www/app
+      - ./Docker/app/source:/usr/src/www/app
 
   reverse_proxy:
     container_name: nginx_container

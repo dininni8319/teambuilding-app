@@ -3,7 +3,6 @@
 app_name="app"
 provisioning_dir="${PWD}"
 source_dir="${provisioning_dir}/Docker/${app_name}/source"
-repo_source="ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/tb_taste_purchase"
 
 (
   set -o errexit
@@ -30,20 +29,24 @@ repo_source="ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/tb_taste_purc
   source .env
   set +o allexport
 
-  echo "Cloning repository..."
-  rm -rf "${source_dir}"
+  if [ -d "${source_dir}" ]; then
+    rm -rf "${source_dir}"
+  fi
+
   mkdir -p "${source_dir}"
-  cd "${source_dir}"
-  git clone "${repo_source}" "${source_dir}"
 
   cd "${source_dir}"
-  git checkout develop
+  git clone "${repo_source}" .
+  git switch develop
+
   cd "${provisioning_dir}"
 
+  source ./scripts/build-dev-image.sh
+
   docker compose up --build --force-recreate -d
-  docker compose exec taste_purchase_web python manage.py collectstatic
-  docker compose exec taste_purchase_web python manage.py migrate
-  docker compose exec taste_purchase_web python manage.py compilemessages
+  docker compose exec --user root taste_purchase_web python manage.py collectstatic
+  docker compose exec --user root  taste_purchase_web python manage.py migrate
+  docker compose exec --user root  taste_purchase_web python manage.py compilemessages
   docker compose exec taste_purchase_web python manage.py test
 
   ping -c 3 "${HTTP_HOST}" || exit 1
