@@ -9,8 +9,8 @@ Readme languages: ENG / ITA
 
 ### Setup
 
-1. From the terminal, change to the directory where is *setup.sh*.
-2. Run *setup.sh* following the on-screen instructions.
+1. From the terminal, change to the directory where is *setup-provisioning.sh*.
+2. Run *setup-provisioning.sh* following the on-screen instructions.
 
 ### Run commands on the containerized environment
 
