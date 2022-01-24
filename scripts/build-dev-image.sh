@@ -5,7 +5,6 @@ app_name="app"
 provisioning_dir="${script_dir}/.."
 dockerfile="${provisioning_dir}/Docker/${app_name}/Dockerfile"
 source_dir="${provisioning_dir}/Docker/${app_name}/source"
-repo_source="git@github.com:Multidialogo/teambuilding-app.git"
 current_dir="${PWD}"
 
 (

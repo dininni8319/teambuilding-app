@@ -3,6 +3,7 @@
 app_name="app"
 provisioning_dir="${PWD}"
 source_dir="${provisioning_dir}/Docker/${app_name}/source"
+repo_source="git@github.com:Multidialogo/teambuilding-app.git"
 
 (
   set -o errexit
