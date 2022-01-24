@@ -29,7 +29,7 @@ services:
     ports:
       - "127.0.0.1:80:80"
     volumes:
-      - ./Docker/app/source/static:/home/user/www/app/static
+      - ./Docker/app/source:/home/user/www/app
 
   fake_smtp:
     container_name: fake_smtp_container

@@ -3,6 +3,7 @@
 app_name="app"
 provisioning_dir="${PWD}"
 source_dir="${provisioning_dir}/Docker/${app_name}/source"
+repo_source="git@github.com:Multidialogo/teambuilding-app.git"
 
 (
   set -o errexit
@@ -44,10 +45,10 @@ source_dir="${provisioning_dir}/Docker/${app_name}/source"
   source ./scripts/build-dev-image.sh
 
   docker compose up --build --force-recreate -d
-  docker compose exec --user root taste_purchase_web python manage.py collectstatic
-  docker compose exec --user root  taste_purchase_web python manage.py migrate
-  docker compose exec --user root  taste_purchase_web python manage.py compilemessages
-  docker compose exec taste_purchase_web python manage.py test
+  docker compose exec taste_purchase_web python manage.py collectstatic
+  docker compose exec taste_purchase_web python manage.py migrate
+  docker compose exec taste_purchase_web python manage.py compilemessages
+  docker compose exec --env DEBUG=False taste_purchase_web python manage.py test
 
   ping -c 3 "${HTTP_HOST}" || exit 1
 
