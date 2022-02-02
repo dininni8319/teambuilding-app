@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+script_dir=$( cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd )
 app_name="app"
 provisioning_dir="${script_dir}/.."
 dockerfile="${provisioning_dir}/Docker/${app_name}/Dockerfile"
@@ -17,8 +17,8 @@ current_dir="${PWD}"
   cd "${current_dir}"
 
   docker build -f "${dockerfile}" \
-    -t "teambuilding/taste-and-purchase-dev" \
-    -t "teambuilding/taste-and-purchase-dev:${tag}" \
+    -t "netbuilderita/teambuilding-app-dev" \
+    -t "netbuilderita/teambuilding-app-dev:${tag}" \
     --target dev \
     .
 )

@@ -9,11 +9,11 @@ Readme languages: ENG / ITA
 
 ### Setup
 
-Run *setup-provisioning.sh* following the on-screen instructions.
+Run *setup-provisioning.sh* and follow the on-screen instructions.
 
-### Export production image
+### Build the production image
 
-{ TODO }
+Run *./scripts/build-prod-image.sh* and follow the on-screen instructions.
 
 ### Run commands on the containerized environment
 
@@ -65,7 +65,7 @@ Esegui *setup-provisioning.sh* e segui le istruzioni a schermo.
 
 ### Esportare l'immagine di produzione
 
-{ DA IMPLEMENTARE}
+Esegui *./scripts/build-prod-image.sh* e segui le istruzioni a schermo.
 
 ### Eseguire comandi nell'ambiente containerizzato
 
