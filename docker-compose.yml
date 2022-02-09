@@ -1,11 +1,11 @@
 version: '3.4'
 
 networks:
-  taste_purchase_network:
+  teambuilding_network:
 
 services:
-  taste_purchase_web:
-    container_name: taste_purchase_container
+  teambuilding_web:
+    container_name: teambuilding_container
     image: netbuilderita/teambuilding-app-dev
     command: gunicorn www.wsgi:application --bind 0.0.0.0:8000
     env_file:
@@ -13,7 +13,7 @@ services:
     expose:
       - 8000
     networks:
-      taste_purchase_network:
+      teambuilding_network:
     user: user
     volumes:
       - ./Docker/app/source:/usr/src/www/app
@@ -25,7 +25,7 @@ services:
     depends_on:
       - taste_purchase_web
     networks:
-      taste_purchase_network:
+      teambuilding_network:
     ports:
       - "127.0.0.1:80:80"
     volumes:
@@ -37,7 +37,7 @@ services:
     logging:
       driver: 'none'
     networks:
-      taste_purchase_network:
+      teambuilding_network:
         aliases:
           - smtp.netbuilder.local
     ports:
