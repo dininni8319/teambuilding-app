@@ -45,10 +45,10 @@ repo_source="git@github.com:Multidialogo/teambuilding-app.git"
   source ./scripts/build-dev-image.sh
 
   docker compose up --build --force-recreate -d
-  docker compose exec taste_purchase_web python manage.py collectstatic
-  docker compose exec taste_purchase_web python manage.py migrate
-  docker compose exec taste_purchase_web python manage.py compilemessages
-  docker compose exec --env DEBUG=False taste_purchase_web python manage.py test
+  docker compose exec teambuilding_web python manage.py collectstatic
+  docker compose exec teambuilding_web python manage.py migrate
+  docker compose exec teambuilding_web python manage.py compilemessages
+  docker compose exec --env DEBUG=False teambuilding_web python manage.py test
 
   ping -c 3 "${HTTP_HOST}" || exit 1
 

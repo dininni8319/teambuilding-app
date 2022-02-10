@@ -23,7 +23,7 @@ services:
     build:
       context: ./Docker/nginx
     depends_on:
-      - taste_purchase_web
+      - teambuilding_web
     networks:
       teambuilding_network:
     ports:
