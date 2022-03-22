@@ -3,7 +3,6 @@
 app_name="app"
 provisioning_dir="${PWD}"
 source_dir="${provisioning_dir}/Docker/${app_name}/source"
-repo_source="git@github.com:Multidialogo/teambuilding-app.git"
 
 (
   set -o errexit
@@ -37,7 +36,7 @@ repo_source="git@github.com:Multidialogo/teambuilding-app.git"
   mkdir -p "${source_dir}"
 
   cd "${source_dir}"
-  git clone "${repo_source}" .
+  git clone "${REPO_URL}" .
   git switch develop
 
   cd "${provisioning_dir}"
